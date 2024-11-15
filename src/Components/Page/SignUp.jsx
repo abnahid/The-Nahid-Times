@@ -1,10 +1,10 @@
 /* eslint-disable no-useless-escape */
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { AuthContext } from "../../Firebase/Providers/AuthProvider";
-import { Link, useNavigate } from "react-router-dom";
-import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
+import { IoEyeSharp } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Firebase/Providers/AuthProvider";
 
 const SignUp = () => {
   const [error, setError] = useState({});
@@ -129,7 +129,7 @@ const SignUp = () => {
               required
             />
             <span
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+              className="text-2xl absolute right-4  top-12 transform -translate-y-1/2 cursor-pointer"
               onClick={() => setType(type === "password" ? "text" : "password")}
             >
               {type === "password" ? <IoEyeSharp /> : <FaEyeSlash />}

@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import toast from "react-hot-toast";
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Firebase/Providers/AuthProvider";
 
 const Login = () => {
   const { loginUser, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const location = useLocation();
 
   const handelSubmit = (e) => {
@@ -12,21 +13,22 @@ const Login = () => {
     const form = new FormData(e.target);
     const email = form.get("email");
     const password = form.get("password");
-    loginUser(email, password) // Context Api Be First
+
+    loginUser(email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        toast.success(`User created successfully!: ${user.email}`);
+        toast.success(`User Login successfully!: ${user.email}`);
         e.target.reset();
-        setUser();
-        Navigate(location?.state ? location.state : "/");
+        setUser(user); // Pass the user object
+        navigate(location?.state?.from || "/category/01"); // Use the navigate function
       })
       .catch((error) => {
-        // const errorCode = error.code;
         const errorMessage = error.message;
         toast.error(`Error: ${errorMessage}`);
       });
   };
+
   return (
     <div className="flex justify-center items-center my-4 min-h-screen">
       <div className="w-full max-w-lg p-20 space-y-8 bg-white rounded-lg border border-white text-dark03">
