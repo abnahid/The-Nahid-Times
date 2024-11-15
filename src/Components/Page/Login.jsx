@@ -1,12 +1,40 @@
+import { useContext } from "react";
+import toast from "react-hot-toast";
+import { Navigate, useLocation } from "react-router-dom";
+import { AuthContext } from "../../Firebase/Providers/AuthProvider";
+
 const Login = () => {
+  const { loginUser, setUser } = useContext(AuthContext);
+  const location = useLocation();
+
+  const handelSubmit = (e) => {
+    e.preventDefault();
+    const form = new FormData(e.target);
+    const email = form.get("email");
+    const password = form.get("password");
+    loginUser(email, password) // Context Api Be First
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        toast.success(`User created successfully!: ${user.email}`);
+        e.target.reset();
+        setUser();
+        Navigate(location?.state ? location.state : "/");
+      })
+      .catch((error) => {
+        // const errorCode = error.code;
+        const errorMessage = error.message;
+        toast.error(`Error: ${errorMessage}`);
+      });
+  };
   return (
-    <div className="flex justify-center items-center">
-      <div className="w-full max-w-lg p-20 space-y-8 bg-white rounded-lg shadow-md text-dark03">
+    <div className="flex justify-center items-center my-4 min-h-screen">
+      <div className="w-full max-w-lg p-20 space-y-8 bg-white rounded-lg border border-white text-dark03">
         <h2 className="text-2xl font-semibold text-center">
           Login your account
         </h2>
 
-        <form>
+        <form onSubmit={handelSubmit}>
           <div className="form-control w-full max-w-sm">
             <label className="label">
               <span className="label-text">Email address</span>
@@ -43,7 +71,7 @@ const Login = () => {
 
         <p className="text-center text-sm mt-4">
           Don’t Have An Account?{" "}
-          <a href="/register" className="text-primary font-semibold">
+          <a href="/auth/register" className="text-primary font-semibold">
             Register
           </a>
         </p>

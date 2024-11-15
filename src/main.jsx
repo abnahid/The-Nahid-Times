@@ -7,20 +7,17 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import App from "./App.jsx";
-import About from "./Components/About.jsx";
-import Career from "./Components/Career.jsx";
-import Error from "./Components/Error.jsx";
-// import Home from "./Components/Home.jsx";
-// import Login from "./Firebase/Login.jsx";
-// import AuthProvider from "./Firebase/Providers/AuthProvider.jsx";
-// import SignUp from "./Firebase/SignUp.jsx";
+import About from "./Components/Page/About.jsx";
+import Career from "./Components/Page/Career.jsx";
 import CategoryNews from "./Components/Page/CategoryNews.jsx";
+import Error from "./Components/Page/Error.jsx";
+import Login from "./Components/Page/Login.jsx";
+import NewsDetail from "./Components/Page/NewsDetail.jsx";
+import SignUp from "./Components/Page/SignUp.jsx";
 import AuthLayout from "./Firebase/AuthLayout/AuthLayout.jsx";
-import Login from "./Firebase/Login.jsx";
-import SignUp from "./Firebase/SignUp.jsx";
+import PrivateRoute from "./Firebase/Private/PrivateRoute.jsx";
+import AuthProvider from "./Firebase/Providers/AuthProvider.jsx";
 import "./index.css";
-
-const loadNews = () => fetch("/news.json");
 
 const router = createBrowserRouter([
   {
@@ -30,7 +27,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Navigate to={"/category/0"}></Navigate>,
+        element: <Navigate to={"/category/01"}></Navigate>,
       },
       {
         path: "/category/:id",
@@ -51,9 +48,14 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/news",
-    element: <h1>News Layout</h1>,
-    loader: loadNews,
+    path: "/news/:id",
+    element: (
+      <PrivateRoute>
+        <NewsDetail></NewsDetail>
+      </PrivateRoute>
+    ),
+    loader: ({ params }) =>
+      fetch(`https://openapi.programming-hero.com/api/news/${params.id}`),
   },
   {
     path: "auth",
@@ -73,9 +75,14 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/* <AuthProvider> */}
-    <RouterProvider router={router} />
-    <Toaster />
-    {/* </AuthProvider> */}
+    <AuthProvider>
+      <RouterProvider router={router} />
+      <Toaster
+        position="right-top"
+        toastOptions={{
+          duration: 1500,
+        }}
+      />
+    </AuthProvider>
   </StrictMode>
 );

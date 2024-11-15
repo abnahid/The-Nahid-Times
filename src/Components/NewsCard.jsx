@@ -1,6 +1,7 @@
 import { FaShareAlt } from "react-icons/fa";
 import { FaRegBookmark, FaStar } from "react-icons/fa6";
 import { IoEyeSharp } from "react-icons/io5";
+import { Link } from "react-router-dom";
 const NewsCard = (props = {}) => {
   const { news } = props || {};
 
@@ -39,9 +40,12 @@ const NewsCard = (props = {}) => {
         {/* Details */}
         <p className="text-neutral-500 font-normal  text-sm mb-4">
           {news.details.slice(0, 250)}...{" "}
-          <span className="text-orange-400 text-base font-semibold">
+          <Link
+            to={`/news/${news._id}`}
+            className="text-orange-400 text-base font-semibold"
+          >
             Read More
-          </span>
+          </Link>
         </p>
 
         <div className="my-4 border border-neutral-200"></div>

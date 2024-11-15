@@ -1,8 +1,8 @@
 import { Link, useRouteError } from "react-router-dom";
-import Footer from "./Footer";
-import Header from "./Home/Header";
-import LatestNews from "./Home/LatestNews";
-import Navbar from "./Home/Navbar";
+import Footer from "../Footer";
+import Header from "../Home/Header";
+import LatestNews from "../Home/LatestNews";
+import Navbar from "../Home/Navbar";
 
 const Error = () => {
   const error = useRouteError();
