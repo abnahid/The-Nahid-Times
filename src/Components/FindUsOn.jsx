@@ -4,24 +4,41 @@ const FindUsOn = () => {
     <div>
       <h2 className="font-semibold mb-3">Find Us On</h2>
       <div className="join flex join-vertical *:bg-base-100">
-        <button className="btn join-item justify-start">
+        <a
+          href="https://www.facebook.com/abnahidagency"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn join-item justify-start"
+        >
           <div className="rounded-full bg-dark07 p-2 mr-2">
             <FaFacebookF className="text-[#3B599C]"></FaFacebookF>
           </div>
           Facebook
-        </button>
-        <button className="btn join-item justify-start">
+        </a>
+
+        <a
+          href="https://twitter.com/xahid_420"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn join-item justify-start"
+        >
           <div className="rounded-full bg-dark07 p-2 mr-2">
             <FaTwitter className="text-[#3B599C]"></FaTwitter>
           </div>
           Twitter
-        </button>
-        <button className="btn join-item justify-start">
+        </a>
+
+        <a
+          href="https://www.instagram.com/abnahidseo"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn join-item justify-start"
+        >
           <div className="rounded-full bg-dark07 p-2 mr-2">
             <FaInstagram></FaInstagram>
           </div>
           Instagram
-        </button>
+        </a>
       </div>
     </div>
   );

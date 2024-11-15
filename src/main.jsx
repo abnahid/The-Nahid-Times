@@ -19,59 +19,71 @@ import PrivateRoute from "./Firebase/Private/PrivateRoute.jsx";
 import AuthProvider from "./Firebase/Providers/AuthProvider.jsx";
 import "./index.css";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <App />,
+      errorElement: <Error />,
+      children: [
+        {
+          path: "",
+          element: <Navigate to={"/category/01"}></Navigate>,
+        },
+        {
+          path: "/category/:id",
+          element: <CategoryNews />,
+          loader: ({ params }) =>
+            fetch(
+              `https://openapi.programming-hero.com/api/news/category/${params.id}`
+            ),
+        },
+        {
+          path: "career",
+          element: <Career />,
+        },
+        {
+          path: "about",
+          element: <About />,
+        },
+      ],
+    },
+    {
+      path: "/news/:id",
+      element: (
+        <PrivateRoute>
+          <NewsDetail></NewsDetail>
+        </PrivateRoute>
+      ),
+      loader: ({ params }) =>
+        fetch(`https://openapi.programming-hero.com/api/news/${params.id}`),
+    },
+    {
+      path: "auth",
+      element: <AuthLayout></AuthLayout>,
+      children: [
+        {
+          path: "/auth/login",
+          element: <Login />,
+        },
+        {
+          path: "/auth/register",
+          element: <SignUp />,
+        },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <App />,
-    errorElement: <Error />,
-    children: [
-      {
-        path: "",
-        element: <Navigate to={"/category/01"}></Navigate>,
-      },
-      {
-        path: "/category/:id",
-        element: <CategoryNews />,
-        loader: ({ params }) =>
-          fetch(
-            `https://openapi.programming-hero.com/api/news/category/${params.id}`
-          ),
-      },
-      {
-        path: "career",
-        element: <Career />,
-      },
-      {
-        path: "about",
-        element: <About />,
-      },
-    ],
-  },
-  {
-    path: "/news/:id",
-    element: (
-      <PrivateRoute>
-        <NewsDetail></NewsDetail>
-      </PrivateRoute>
-    ),
-    loader: ({ params }) =>
-      fetch(`https://openapi.programming-hero.com/api/news/${params.id}`),
-  },
-  {
-    path: "auth",
-    element: <AuthLayout></AuthLayout>,
-    children: [
-      {
-        path: "/auth/login",
-        element: <Login />,
-      },
-      {
-        path: "/auth/register",
-        element: <SignUp />,
-      },
-    ],
-  },
-]);
+    future: {
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+      v7_fetcherPersist: true,
+      v7_normalizeFormMethod: true,
+      v7_partialHydration: true,
+      v7_skipActionErrorRevalidation: true,
+    },
+  }
+);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
